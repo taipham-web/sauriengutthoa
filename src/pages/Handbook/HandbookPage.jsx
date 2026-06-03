@@ -1,12 +1,17 @@
 // src/pages/HandbookPage.jsx
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import SEO from '../../components/SEO';
 
 export default function HandbookPage() {
     const { t } = useTranslation();
 
     return (
         <div className="bg-[#FAFAFA] min-h-screen font-sans pt-24 pb-16">
+            <SEO 
+                title={t('handbookTitle', { defaultValue: 'Cẩm Nang Sầu Riêng' })} 
+                description="Tổng hợp những kiến thức, mẹo chọn sầu riêng, cách bảo quản và các món ăn ngon từ sầu riêng Út Thoa."
+            />
             <div className="max-w-7xl mx-auto px-4 md:px-8">
                 {/* Header */}
                 <div className="text-center mb-16">

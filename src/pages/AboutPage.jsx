@@ -1,12 +1,18 @@
 // src/pages/AboutPage.jsx
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import SEO from '../components/SEO';
 
 export default function AboutPage() {
     const { t } = useTranslation();
 
     return (
         <div className="bg-white min-h-screen font-sans">
+            <SEO 
+                title={t('aboutUs', { defaultValue: 'Giới Thiệu' })} 
+                description="Tìm hiểu câu chuyện về Sầu Riêng Út Thoa, quy trình trồng và thu hoạch sầu riêng sạch miền Tây. Cam kết chất lượng bao ăn 1 đổi 1."
+                image="/vuon.jpg"
+            />
             <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
                 <div className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 hover:scale-105" style={{ backgroundImage: "url('/vua_sr.jpg')" }}></div>
                 <div className="absolute inset-0 bg-black/30"></div>

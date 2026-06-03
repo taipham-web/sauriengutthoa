@@ -10,19 +10,19 @@ const SEO = ({ title, description, image, url }) => {
   return (
     <Helmet>
       {/* Thẻ SEO cơ bản */}
-      <title>{title} | Sầu Riêng Út Thoa</title>
+      <title>{`Sầu Riêng Út Thoa - ${title}`}</title>
       <meta name="description" content={description} />
 
       {/* Thẻ SEO cho Facebook (Open Graph) */}
       <meta property="og:type" content="website" />
       <meta property="og:url" content={currentUrl} />
-      <meta property="og:title" content={`${title} | Sầu Riêng Út Thoa`} />
+      <meta property="og:title" content={`Sầu Riêng Út Thoa - ${title}`} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image || defaultImage} />
 
       {/* Thẻ SEO cho Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content={`${title} | Sầu Riêng Út Thoa`} />
+      <meta name="twitter:title" content={`Sầu Riêng Út Thoa - ${title}`} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={image || defaultImage} />
     </Helmet>

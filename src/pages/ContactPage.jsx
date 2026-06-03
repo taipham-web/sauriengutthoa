@@ -4,6 +4,7 @@ import { db } from '../config/firebase';
 import { collection, addDoc } from 'firebase/firestore';
 import { useTranslation } from 'react-i18next';
 import emailjs from '@emailjs/browser';
+import SEO from '../components/SEO';
 
 export default function ContactPage() {
   const { t } = useTranslation();
@@ -41,6 +42,10 @@ export default function ContactPage() {
 
   return (
     <div className="bg-white min-h-screen py-16 px-4 md:px-10 font-sans">
+      <SEO 
+        title={t('contactTitle', { defaultValue: 'Liên Hệ' })} 
+        description="Liên hệ Vựa Sầu Riêng Út Thoa để đặt hàng sỉ, lẻ hoặc hợp tác kinh doanh. Hotline: 0349 323 539."
+      />
       <div className="text-center mb-16">
         <h1 className="text-3xl md:text-4xl font-bold text-[#1a365d] mb-4 uppercase tracking-wide">
           {t('contactTitle')}

@@ -5,6 +5,7 @@ import { db } from '../../config/firebase';
 import { collection, getDocs, orderBy, query } from 'firebase/firestore';
 import { useTranslation } from 'react-i18next';
 import ProductCard from './ProductCard';
+import SEO from '../../components/SEO';
 
 // ─── Mock data ────────────────────────────────────────────────────────────────
 const productsData = [
@@ -166,6 +167,11 @@ export default function ProductsPage() {
 
     return (
         <div className="bg-gray-50 min-h-screen font-sans pt-16 pb-20">
+            <SEO 
+                title={t('productsTitle', { defaultValue: 'Sản Phẩm' })} 
+                description="Khám phá các loại sầu riêng thơm ngon tại Út Thoa: Ri6, Monthong nguyên trái, tách múi và sầu riêng cấp đông xuất khẩu."
+                image="/ri6.jpg"
+            />
             <div className="max-w-7xl mx-auto px-4 md:px-8">
 
                 {/* ── Page header ── */}
