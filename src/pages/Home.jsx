@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import SEO from '../components/SEO';
 import { db } from '../config/firebase';
 import { collection, getDocs, orderBy, query, limit } from 'firebase/firestore';
 
@@ -14,7 +15,7 @@ const STATIC_PRODUCTS = [
 const FALLBACK_IMG = 'https://images.unsplash.com/photo-1596450514735-37330528246a?w=800&q=80';
 const ORCHARD_IMG = '/vuon.jpg';
 
-export default function Hero() {
+export default function Home() {
     const { t } = useTranslation();
     const [latestProducts, setLatestProducts] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -37,6 +38,11 @@ export default function Hero() {
 
     return (
         <div className="font-sans">
+            <SEO 
+                title={t('header.home', { defaultValue: 'Trang Chủ' })} 
+                description="Vựa sầu riêng Út Thoa chuyên cung cấp sỉ và lẻ các loại sầu riêng Ri6, Monthong Thái cắt tại vườn. Bao sượng, bao ăn 1 đổi 1."
+                image="/vuon.jpg"
+            />
 
             {/* ── HERO SECTION ── */}
             <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-[#faf9f6]">

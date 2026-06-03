@@ -1,13 +1,14 @@
 // src/App.jsx
 import { useState, useEffect } from 'react';
-import ProductsPage from './pages/ProductsPage';
+import ProductsPage from './pages/Product/ProductsPage';
 import AboutPage from './pages/AboutPage';
+import ProductDetails from './pages/Product/ProductDetailsPage';
 import { Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import ContactPage from './pages/ContactPage';
 import AdminPage from './pages/Admin/AdminPage';
-import Hero from './components/Hero'; // Tạm thời dùng Hero làm trang chủ
+import Home from './pages/Home'; // Đã chuyển Hero thành Home
 import MobileBottomNav from './components/MobileBottomNav';
 import PreservationGuidePage from './pages/Handbook/PreservationGuidePage';
 import NutritionGuidePage from './pages/Handbook/NutritionGuidePage';
@@ -60,9 +61,10 @@ function App() {
       <main className="flex-grow">
         <Routes>
           {/* Định nghĩa đường dẫn cho Trang Chủ */}
-          <Route path="/" element={<Hero />} />
+          <Route path="/" element={<Home />} />
           <Route path="/gioi-thieu" element={<AboutPage />} />
           <Route path="/san-pham" element={<ProductsPage />} />
+          <Route path="/san-pham/:id" element={<ProductDetails />} />
           <Route path="/cam-nang" element={<HandbookPage />} />
           {/* Đường dẫn trang Liên Hệ */}
           <Route path="/lien-he" element={<ContactPage />} />
