@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { ShoppingCart, Leaf, Sun, Truck } from 'lucide-react';
 import SEO from '../components/SEO';
 import { db } from '../config/firebase';
 import { collection, getDocs, orderBy, query, limit } from 'firebase/firestore';
@@ -182,9 +183,9 @@ export default function Home() {
             <section className="py-20 bg-[#e9e8e5]">
                 <div className="max-w-7xl mx-auto px-6 md:px-10">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-                        <WhyCard icon="🌿" title={t('why1Title')} desc={t('why1Desc')} color="bg-green-100 text-green-700" />
-                        <WhyCard icon="☀️" title={t('why2Title')} desc={t('why2Desc')} color="bg-amber-100 text-amber-700" />
-                        <WhyCard icon="🚚" title={t('why3Title')} desc={t('why3Desc')} color="bg-blue-100 text-blue-700" />
+                        <WhyCard icon={<Leaf className="w-10 h-10" />} title={t('why1Title')} desc={t('why1Desc')} color="bg-green-100 text-green-700" />
+                        <WhyCard icon={<Sun className="w-10 h-10" />} title={t('why2Title')} desc={t('why2Desc')} color="bg-amber-100 text-amber-700" />
+                        <WhyCard icon={<Truck className="w-10 h-10" />} title={t('why3Title')} desc={t('why3Desc')} color="bg-blue-100 text-blue-700" />
                     </div>
                 </div>
             </section>
@@ -244,7 +245,7 @@ function EditorialProductCard({ product }) {
                             className="w-11 h-11 rounded-full bg-gradient-to-br from-[#7e5700] to-[#ffb300] text-white flex items-center justify-center shadow-lg hover:scale-110 active:scale-95 transition-transform text-lg"
                             title={t('consultOrder')}
                         >
-                            🛒
+                            <ShoppingCart className="w-5 h-5" />
                         </a>
                     )}
                 </div>

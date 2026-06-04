@@ -1,6 +1,7 @@
 // src/pages/AboutPage.jsx
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { Leaf, BadgeCheck, Check } from 'lucide-react';
 import SEO from '../components/SEO';
 
 export default function AboutPage() {
@@ -37,7 +38,7 @@ export default function AboutPage() {
                 <div className="grid grid-cols-1 md:grid-cols-5 gap-12 items-center">
                     <div className="md:col-span-3 space-y-8 text-lg text-gray-700 leading-relaxed text-justify font-normal">
                         <p>{t('aboutP1')}</p>
-                        <blockquote className="border-l-4 border-amber-500 pl-8 py-3 my-10 italic bg-amber-50 rounded-r-2xl text-amber-950 font-medium text-xl shadow-inner">
+                        <blockquote className="border-l-4 border-amber-500 px-8 py-4 my-10 italic bg-amber-50 rounded-r-2xl text-amber-950 font-medium text-xl shadow-inner">
                             {t('aboutQuote')}
                         </blockquote>
                         <p>{t('aboutP2')}</p>
@@ -55,7 +56,9 @@ export default function AboutPage() {
                     {/* Câu Chuyện Thương Hiệu */}
                     <div className="bg-white rounded-2xl p-8 shadow-[0_4px_24px_rgba(26,54,93,0.08)] border border-gray-100">
                         <h2 className="text-2xl font-bold text-[#1a365d] mb-5 flex items-center gap-3">
-                            <span className="w-9 h-9 rounded-full bg-green-100 flex items-center justify-center text-green-700 text-lg flex-shrink-0">🌿</span>
+                            <span className="w-9 h-9 rounded-full bg-green-100 flex items-center justify-center text-green-700 text-lg flex-shrink-0">
+                                <Leaf className="w-5 h-5" />
+                            </span>
                             {t('brandStoryTitle')}
                         </h2>
                         <div className="space-y-4 text-gray-600 text-base leading-relaxed">
@@ -67,20 +70,22 @@ export default function AboutPage() {
                     {/* Cam Kết Chất Lượng */}
                     <div className="bg-amber-50 rounded-2xl p-8 shadow-[0_4px_24px_rgba(26,54,93,0.08)] border border-amber-100">
                         <h2 className="text-2xl font-bold text-[#1a365d] mb-5 flex items-center gap-3">
-                            <span className="w-9 h-9 rounded-full bg-amber-200 flex items-center justify-center text-amber-700 text-lg flex-shrink-0">✅</span>
+                            <span className="w-9 h-9 rounded-full bg-amber-200 flex items-center justify-center text-amber-700 text-lg flex-shrink-0">
+                                <BadgeCheck className="w-5 h-5" />
+                            </span>
                             {t('qualityCommitTitle')}
                         </h2>
                         <ul className="space-y-5 text-gray-700 text-base">
                             <li className="flex items-start gap-3">
-                                <span className="text-green-600 text-xl mt-0.5 flex-shrink-0">✔</span>
+                                <Check className="text-green-600 w-5 h-5 mt-0.5 flex-shrink-0" />
                                 <span><strong className="text-[#1a365d]">{t('qualityCommit1Bold')}</strong> {t('qualityCommit1Desc')}</span>
                             </li>
                             <li className="flex items-start gap-3">
-                                <span className="text-green-600 text-xl mt-0.5 flex-shrink-0">✔</span>
+                                <Check className="text-green-600 w-5 h-5 mt-0.5 flex-shrink-0" />
                                 <span><strong className="text-[#1a365d]">{t('qualityCommit2Bold')}</strong> {t('qualityCommit2Desc')}</span>
                             </li>
                             <li className="flex items-start gap-3">
-                                <span className="text-green-600 text-xl mt-0.5 flex-shrink-0">✔</span>
+                                <Check className="text-green-600 w-5 h-5 mt-0.5 flex-shrink-0" />
                                 <span><strong className="text-[#1a365d]">{t('qualityCommit3Bold')}</strong> {t('qualityCommit3Desc')}</span>
                             </li>
                         </ul>
