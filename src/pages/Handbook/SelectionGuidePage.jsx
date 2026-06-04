@@ -117,7 +117,7 @@ export default function SelectionGuidePage() {
                             <img
                                 alt="Chuyên gia Út Thoa"
                                 className="w-10 h-10 rounded-full object-cover border-2 border-stone-200"
-                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVvafZ3DEzpvD9ImvmsUshb29ctClc-fJ47EbSU3TvJYUpdbPkn-NLQkB7POiqziVy3l4-wUTYtUW-k4YGW9hxyVmdcxM5zorxkjYvMwEHoarsQPtr98xDRHSFtZZEfrkyPAuiBws6h_Y0tyeETDb6TBd6UTElZZxrYrZES9xdDW9CaSSE2AcW9C-c3nfAXwcqxRt0Lu6cbS_tv3NHdy1QIzQZwui3w8Ivff3NBMSRVO8kc5zPih8CFfYgkjX_ItSxswjzDJjDAnBJ"
+                                src="/Logo.svg"
                             />
                             <span className="font-serif font-semibold text-[#182810]">{t('culAuthor')}</span>
                         </div>

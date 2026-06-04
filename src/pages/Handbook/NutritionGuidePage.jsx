@@ -27,7 +27,7 @@ export default function NutritionGuidePage() {
                 {/* Hero Section */}
                 <section className="relative w-full h-[618px] min-h-[500px] flex items-end pb-20 px-6 md:px-12">
                     <div className="absolute inset-0 z-0">
-                        <img alt="Durian Hero" className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKY4yzPVIJJCHcKPx3SuGukgOCIhWh_F7Bd-dyNLr7dYVUZG_odl7-D1npIYr0FbIPuuAyURZzTZYw3Fs5oBRsPADPejmgnVspQiuK65truWaqT-TkRvRbIK-nk9RhOeIvKbCICvAyrTz_yCMMfFFlkYa_LUAPd0Sja0W2_zzt2-SGUJikhOt0g_JP2IL63oxMCgLvXC5HPCwTZt03c6tByzieohcc7N9UVkGvRUijGnGJWIZ7yFhcuadt4-uoMcUGKUZ9Ue9_wns" />
+                        <img alt="Durian Hero" className="w-full h-full object-cover"src="/SR_trai.jpg" />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#182810]/90 via-[#182810]/40 to-transparent"></div>
                     </div>
                     <div className="relative z-10 max-w-[1140px] mx-auto w-full">
