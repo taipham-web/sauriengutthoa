@@ -63,8 +63,9 @@ export default function Header() {
 
                     {/* 1. Logo */}
                     <Link to="/" className="flex items-center gap-3 shrink-0 group">
-                        <div className="w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
-                            <img alt="Logo" className="w-full h-full object-cover" src="/Logo.svg" />   
+                        {/* Đã thêm: bg-white (nền trắng), p-1 (đệm), border (viền vàng) */}
+                        <div className="w-12 h-12 md:w-14 md:h-14 bg-white rounded-full flex items-center justify-center border-2 border-[#c9a227] shadow-[0_0_10px_rgba(201,162,39,0.3)] group-hover:scale-110 transition-transform duration-300">
+                            <img alt="Logo" className="w-full h-full object-contain p-0.5" src="/Logo.svg" />
                         </div>
                         <div className="text-sm md:text-xl font-black text-white uppercase tracking-tight hidden sm:block">
                             SẦU RIÊNG ÚT THOA
