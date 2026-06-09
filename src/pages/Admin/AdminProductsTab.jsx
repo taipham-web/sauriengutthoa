@@ -240,7 +240,7 @@ export default function AdminProductsTab() {
                   {currentProducts.map((item) => (
                     <tr key={item.id} className="hover:bg-amber-50/50 transition-colors">
                       <td className="p-4">
-                        <img src={item.imgSrc || "/durian.jpg"} alt="" className="w-16 h-16 object-cover rounded-lg border border-gray-200" onError={e => { e.target.onerror = null; e.target.src = '/durian.jpg'; }} />
+                        <img src={item.imgSrc || "/durian.webp"} alt="" className="w-16 h-16 object-cover rounded-lg border border-gray-200" onError={e => { e.target.onerror = null; e.target.src = '/durian.webp'; }} />
                       </td>
                       <td className="p-4 font-bold text-gray-900">
                         {item.name}
@@ -396,7 +396,7 @@ export default function AdminProductsTab() {
                           src={url}
                           alt={`gallery-${idx}`}
                           className={`w-20 h-20 object-cover rounded-lg border-2 transition-colors ${formData.imgSrc === url ? 'border-amber-400' : 'border-gray-200'}`}
-                          onError={e => { e.target.onerror = null; e.target.src = '/durian.jpg'; }}
+                          onError={e => { e.target.onerror = null; e.target.src = '/durian.webp'; }}
                         />
                         {/* Badge ảnh chính */}
                         {formData.imgSrc === url && (

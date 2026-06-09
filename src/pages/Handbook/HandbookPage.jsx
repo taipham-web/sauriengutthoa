@@ -35,7 +35,7 @@ export default function HandbookPage() {
                         <img 
                             alt="Choosing Durian" 
                             className="w-full h-[500px] object-cover group-hover:scale-105 transition-transform duration-700" 
-                            src="/cach_chon_sr.jpg"
+                            src="/cach_chon_sr.webp"
                         />
                         <div className="absolute bottom-0 left-0 p-8 z-20 w-full">
                             <span className="bg-amber-500 text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider inline-block mb-4">{t('article1Tag')}</span>
@@ -52,7 +52,7 @@ export default function HandbookPage() {
                                 <img 
                                     alt="Storing Durian" 
                                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
-                                    src="./anh_sr.jpg"
+                                    src="./anh_sr.webp"
                                 />
                             </div>
                             <div>
@@ -68,7 +68,7 @@ export default function HandbookPage() {
                                 <img 
                                     alt="Nutrition" 
                                     className="w-full h-full object-cover rounded-2xl group-hover:scale-110 transition-transform duration-500 opacity-90 mix-blend-multiply" 
-                                    src="./anh_sr2.jpg"
+                                    src="./anh_sr2.webp"
                                 />
                             </div>
                             <div>
@@ -84,7 +84,7 @@ export default function HandbookPage() {
                                 <img 
                                     alt="Recipes" 
                                     className="w-full h-full object-cover rounded-2xl group-hover:scale-110 transition-transform duration-500" 
-                                    src="./anh_sr1.jpg"
+                                    src="./anh_sr1.webp"
                                 />
                             </div>
                             <div>

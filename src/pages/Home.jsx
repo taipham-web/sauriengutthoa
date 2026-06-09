@@ -15,7 +15,7 @@ const STATIC_PRODUCTS = [
 ];
 
 const FALLBACK_IMG = 'https://images.unsplash.com/photo-1596450514735-37330528246a?w=800&q=80';
-const ORCHARD_IMG = '/vuon.jpg';
+const ORCHARD_IMG = '/vuon.webp';
 
 // SEO-04: LocalBusiness JSON-LD Schema — hiển thị Knowledge Panel trên Google
 const LOCAL_BUSINESS_SCHEMA = JSON.stringify({

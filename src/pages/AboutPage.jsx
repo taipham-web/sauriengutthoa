@@ -12,10 +12,10 @@ export default function AboutPage() {
             <SEO 
                 title={t('aboutUs', { defaultValue: 'Giới Thiệu' })} 
                 description="Tìm hiểu câu chuyện về Sầu Riêng Út Thoa, quy trình trồng và thu hoạch sầu riêng sạch miền Tây. Cam kết chất lượng bao ăn 1 đổi 1."
-                image="/vuon.jpg"
+                image="/vuon.webp"
             />
             <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
-                <div className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 hover:scale-105" style={{ backgroundImage: "url('/vua_sr.jpg')" }}></div>
+                <div className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 hover:scale-105" style={{ backgroundImage: "url('/vua_sr.webp')" }}></div>
                 <div className="absolute inset-0 bg-black/30"></div>
                 <div className="relative z-10 text-center px-4 max-w-5xl">
                     <span className="text-amber-400 font-bold tracking-widest uppercase text-sm md:text-base mb-6 block [text-shadow:_0_1px_5px_rgb(0_0_0_/_0.5)]">
@@ -44,7 +44,7 @@ export default function AboutPage() {
                         <p>{t('aboutP2')}</p>
                     </div>
                     <div className="md:col-span-2 space-y-6">
-                        <img src="/vuon.jpg" alt="Vuon sau rieng" className="rounded-2xl shadow-lg object-cover h-64 w-full" />
+                        <img src="/vuon.webp" alt="Vuon sau rieng" className="rounded-2xl shadow-lg object-cover h-64 w-full" />
                     </div>
                 </div>
             </div>
@@ -165,7 +165,7 @@ export default function AboutPage() {
                         <img
                             alt="Choosing Durian"
                             className="w-full h-[500px] object-cover group-hover:scale-105 transition-transform duration-700"
-                            src="/cach_chon_sr.jpg"
+                            src="/cach_chon_sr.webp"
                         />
                         <div className="absolute bottom-0 left-0 p-8 z-20 w-full">
                             <span className="bg-amber-500 text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider inline-block mb-4">{t('article1Tag')}</span>
@@ -179,7 +179,7 @@ export default function AboutPage() {
                         {/* Article 1 - Bảo quản */}
                         <Link to="/kien-thuc/bao-quan-sau-rieng" className="flex gap-6 items-center group cursor-pointer bg-white p-4 rounded-3xl shadow-sm hover:shadow-md transition-all">
                             <div className="w-32 h-32 rounded-2xl overflow-hidden shrink-0">
-                                <img alt="Storing Durian" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="/anh_sr.jpg" />
+                                <img alt="Storing Durian" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="/anh_sr.webp" />
                             </div>
                             <div>
                                 <span className="text-green-600 text-xs font-bold uppercase tracking-wider mb-2 block">{t('article2Tag')}</span>
@@ -191,7 +191,7 @@ export default function AboutPage() {
                         {/* Article 2 - Dinh dưỡng */}
                         <Link to="/kien-thuc/dinh-duong-sau-rieng" className="flex gap-6 items-center group cursor-pointer bg-white p-4 rounded-3xl shadow-sm hover:shadow-md transition-all">
                             <div className="w-32 h-32 rounded-2xl overflow-hidden shrink-0 bg-orange-50 flex items-center justify-center">
-                                <img alt="Nutrition" className="w-full h-full object-cover rounded-2xl group-hover:scale-110 transition-transform duration-500 opacity-90 mix-blend-multiply" src="/anh_sr2.jpg" />
+                                <img alt="Nutrition" className="w-full h-full object-cover rounded-2xl group-hover:scale-110 transition-transform duration-500 opacity-90 mix-blend-multiply" src="/anh_sr2.webp" />
                             </div>
                             <div>
                                 <span className="text-orange-500 text-xs font-bold uppercase tracking-wider mb-2 block">{t('article3Tag')}</span>
@@ -203,7 +203,7 @@ export default function AboutPage() {
                         {/* Article 3 - Ẩm thực */}
                         <Link to="/kien-thuc/am-thuc-sau-rieng" className="flex gap-6 items-center group cursor-pointer bg-white p-4 rounded-3xl shadow-sm hover:shadow-md transition-all">
                             <div className="w-32 h-32 rounded-2xl overflow-hidden shrink-0 bg-yellow-50 flex items-center justify-center">
-                                <img alt="Recipes" className="w-full h-full object-cover rounded-2xl group-hover:scale-110 transition-transform duration-500" src="/anh_sr1.jpg" />
+                                <img alt="Recipes" className="w-full h-full object-cover rounded-2xl group-hover:scale-110 transition-transform duration-500" src="/anh_sr1.webp" />
                             </div>
                             <div>
                                 <span className="text-yellow-600 text-xs font-bold uppercase tracking-wider mb-2 block">{t('article4Tag')}</span>
