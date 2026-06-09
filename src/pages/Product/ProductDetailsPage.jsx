@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { db } from '../../config/firebase';
 import { doc, getDoc, collection, getDocs, limit, query } from 'firebase/firestore';
 import SEO from '../../components/SEO';
 import ProductCard from './ProductCard';
+
+const SITE_URL = 'https://sauriengutthoa.vn';
 
 // ─── Mock data dùng làm fallback ──────────────────────────────────────────────
 const MOCK_PRODUCTS = [
@@ -11,14 +13,10 @@ const MOCK_PRODUCTS = [
         id: '1',
         name: 'Sầu Riêng Ri6 Nguyên Trái',
         category: 'nguyen-trai',
-        price: '120.000đ / kg',
+        price: 'Liên hệ báo giá',
         desc: 'Cơm vàng, hạt lép, vị ngọt đậm đà, béo ngậy đặc trưng. Lựa chọn số 1 của khách hàng miền Tây.',
-        imgSrc: '/ri6.jpg',          // Ảnh đại diện hiện trên danh sách
-        images: [                    // Mảng ảnh cho gallery trang chi tiết
-            '/ri6.jpg',
-            '/ri6-tach.jpg',
-            '/vuon.jpg',
-        ],
+        imgSrc: '/ri6.jpg',
+        images: ['/ri6.jpg', '/ri6-tach.jpg', '/vuon.jpg'],
         badge: 'Bán chạy',
         origin: 'Bến Tre, Việt Nam',
         weight: 'Nguyên trái (2-5kg)',
@@ -29,13 +27,10 @@ const MOCK_PRODUCTS = [
         id: '2',
         name: 'Sầu Riêng Monthong Nguyên Trái',
         category: 'nguyen-trai',
-        price: '135.000đ / kg',
+        price: 'Liên hệ báo giá',
         desc: 'Sầu riêng Thái cơm dày, ráo, vị ngọt thanh, mùi thơm nhẹ không quá gắt.',
         imgSrc: '/monthong.jpg',
-        images: [
-            '/monthong.jpg',
-            '/monthong-tach.jpg',
-        ],
+        images: ['/monthong.jpg', '/monthong-tach.jpg'],
         badge: '',
         origin: 'Tiền Giang, Việt Nam',
         weight: 'Nguyên trái (2-5kg)',
@@ -46,12 +41,10 @@ const MOCK_PRODUCTS = [
         id: '3',
         name: 'Sầu Riêng Chuồng Bò Nguyên Trái',
         category: 'nguyen-trai',
-        price: '110.000đ / kg',
+        price: 'Liên hệ báo giá',
         desc: 'Vị nhẫn đắng nhẹ đặc biệt, cơm mềm tan trong miệng, dành cho người sành ăn.',
         imgSrc: '/chuongbo.jpg',
-        images: [
-            '/chuongbo.jpg',
-        ],
+        images: ['/chuongbo.jpg'],
         badge: 'Đặc sản',
         origin: 'Bến Tre, Việt Nam',
         weight: 'Nguyên trái (2-4kg)',
@@ -62,13 +55,10 @@ const MOCK_PRODUCTS = [
         id: '4',
         name: 'Ri6 Tách Múi Sẵn',
         category: 'tach-mui',
-        price: '350.000đ / hộp 1kg',
+        price: 'Liên hệ báo giá',
         desc: 'Múi to, đều, vàng ươm. Được tách sẵn, tiện lợi thưởng thức ngay không cần chờ đợi.',
         imgSrc: '/ri6-tach.jpg',
-        images: [
-            '/ri6-tach.jpg',
-            '/ri6.jpg',
-        ],
+        images: ['/ri6-tach.jpg', '/ri6.jpg'],
         badge: 'Tiện lợi',
         origin: 'Bến Tre, Việt Nam',
         weight: 'Hộp 1kg',
@@ -79,13 +69,10 @@ const MOCK_PRODUCTS = [
         id: '5',
         name: 'Monthong Tách Múi',
         category: 'tach-mui',
-        price: '380.000đ / hộp 1kg',
+        price: 'Liên hệ báo giá',
         desc: 'Múi ráo, thịt dày. Phù hợp làm quà biếu tặng hoặc dùng trong gia đình.',
         imgSrc: '/monthong-tach.jpg',
-        images: [
-            '/monthong-tach.jpg',
-            '/monthong.jpg',
-        ],
+        images: ['/monthong-tach.jpg', '/monthong.jpg'],
         badge: '',
         origin: 'Tiền Giang, Việt Nam',
         weight: 'Hộp 1kg',
@@ -99,9 +86,7 @@ const MOCK_PRODUCTS = [
         price: 'Liên hệ báo giá',
         desc: 'Cấp đông nguyên trái công nghệ hiện đại, chuẩn xuất khẩu. Giữ nguyên hương vị tươi ngon.',
         imgSrc: '/cap-dong-trai.jpg',
-        images: [
-            '/cap-dong-trai.jpg',
-        ],
+        images: ['/cap-dong-trai.jpg'],
         badge: 'Xuất khẩu',
         origin: 'Bến Tre, Việt Nam',
         weight: 'Nguyên trái (2-5kg)',
@@ -115,9 +100,7 @@ const MOCK_PRODUCTS = [
         price: 'Liên hệ báo giá',
         desc: 'Nguyên liệu lý tưởng cho quán chè, tiệm bánh, kem sầu riêng. Bán sỉ và lẻ.',
         imgSrc: '/sau-rieng-xay.jpg',
-        images: [
-            '/sau-rieng-xay.jpg',
-        ],
+        images: ['/sau-rieng-xay.jpg'],
         badge: 'Sỉ & Lẻ',
         origin: 'Bến Tre, Việt Nam',
         weight: 'Túi 1kg / 5kg',
@@ -128,6 +111,16 @@ const MOCK_PRODUCTS = [
 
 const FALLBACK_IMG = 'https://images.unsplash.com/photo-1596450514735-37330528246a?w=800&q=80';
 
+// ── CODE-02: Helper tránh duplicate fallback logic ─────────────────────────────
+const getMockFallback = (id) => {
+    const mock = MOCK_PRODUCTS.find(p => String(p.id) === String(id));
+    if (!mock) return { product: null, related: [] };
+    return {
+        product: mock,
+        related: MOCK_PRODUCTS.filter(p => String(p.id) !== String(id)).slice(0, 5),
+    };
+};
+
 export default function ProductDetailsPage() {
     const { id } = useParams();
     const [product, setProduct] = useState(null);
@@ -135,13 +128,18 @@ export default function ProductDetailsPage() {
     const [loading, setLoading] = useState(true);
     const [activeImg, setActiveImg] = useState('');
 
+    // ── CODE-01: useEffect với isMounted flag — tránh memory leak ─────────────
     useEffect(() => {
+        let isMounted = true;
+
         const fetchProduct = async () => {
             setLoading(true);
             try {
                 // 1. Thử lấy từ Firebase trước
                 const docRef = doc(db, 'products', id);
                 const docSnap = await getDoc(docRef);
+
+                if (!isMounted) return;
 
                 if (docSnap.exists()) {
                     const data = { id: docSnap.id, ...docSnap.data() };
@@ -151,50 +149,41 @@ export default function ProductDetailsPage() {
                     // Lấy sản phẩm liên quan từ Firebase
                     const relQ = query(collection(db, 'products'), limit(6));
                     const relSnap = await getDocs(relQ);
+                    if (!isMounted) return;
                     const related = relSnap.docs
                         .map(d => ({ id: d.id, ...d.data() }))
                         .filter(p => p.id !== id)
                         .slice(0, 5);
                     setRelatedProducts(related);
                 } else {
-                    // 2. Fallback: tìm trong mock data theo id (số hoặc chuỗi)
-                    const mockProduct = MOCK_PRODUCTS.find(
-                        p => String(p.id) === String(id)
-                    );
-                    if (mockProduct) {
-                        setProduct(mockProduct);
-                        setActiveImg(mockProduct.imgSrc || FALLBACK_IMG);
-                        setRelatedProducts(
-                            MOCK_PRODUCTS.filter(p => String(p.id) !== String(id)).slice(0, 5)
-                        );
-                    } else {
-                        setProduct(null);
-                    }
+                    // 2. Fallback: tìm trong mock data
+                    const { product: mock, related } = getMockFallback(id);
+                    setProduct(mock);
+                    setActiveImg(mock?.imgSrc || FALLBACK_IMG);
+                    setRelatedProducts(related);
                 }
-            } catch (err) {
+            } catch {
                 // 3. Lỗi mạng/Firebase → dùng mock data
-                const mockProduct = MOCK_PRODUCTS.find(
-                    p => String(p.id) === String(id)
-                );
-                if (mockProduct) {
-                    setProduct(mockProduct);
-                    setActiveImg(mockProduct.imgSrc || FALLBACK_IMG);
-                    setRelatedProducts(
-                        MOCK_PRODUCTS.filter(p => String(p.id) !== String(id)).slice(0, 5)
-                    );
-                }
+                if (!isMounted) return;
+                const { product: mock, related } = getMockFallback(id);
+                setProduct(mock);
+                setActiveImg(mock?.imgSrc || FALLBACK_IMG);
+                setRelatedProducts(related);
             } finally {
-                setLoading(false);
+                if (isMounted) setLoading(false);
             }
         };
 
         if (id) fetchProduct();
+
+        // Cleanup function — tránh state update trên unmounted component
+        return () => { isMounted = false; };
     }, [id]);
 
     // ── Loading state ──────────────────────────────────────────────────────────
     if (loading) {
         return (
-            <div className="flex justify-center items-center min-h-[60vh]">
+            <div className="flex justify-center items-center min-h-[60vh]" aria-label="Đang tải sản phẩm">
                 <div className="flex flex-col items-center gap-4">
                     <div className="animate-spin rounded-full h-12 w-12 border-4 border-amber-500 border-t-transparent" />
                     <p className="text-on-surface-variant text-sm">Đang tải sản phẩm...</p>
@@ -207,7 +196,7 @@ export default function ProductDetailsPage() {
     if (!product) {
         return (
             <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4 px-4 text-center">
-                <div className="text-6xl">🔍</div>
+                <div className="text-6xl" aria-hidden="true">🔍</div>
                 <h1 className="text-2xl font-bold text-on-background">Không tìm thấy sản phẩm</h1>
                 <p className="text-on-surface-variant">Sản phẩm bạn tìm có thể đã ngừng kinh doanh hoặc không tồn tại.</p>
                 <Link to="/san-pham" className="mt-2 px-6 py-3 bg-primary text-on-primary rounded-lg font-bold hover:opacity-90 transition-opacity">
@@ -222,33 +211,43 @@ export default function ProductDetailsPage() {
         ? product.images
         : [product.imgSrc || product.image || FALLBACK_IMG];
 
+    const productImgSrc = product.imgSrc || product.image || FALLBACK_IMG;
+
     return (
         <>
+            {/* SEO-03: Truyền product prop để kích hoạt Product JSON-LD Schema */}
             <SEO
                 title={product.name}
                 description={product.desc}
-                image={product.imgSrc || product.image || FALLBACK_IMG}
+                image={productImgSrc}
+                url={`${SITE_URL}/san-pham/${product.id}`}
+                type="product"
+                product={product}
             />
             <main className="flex-grow w-full max-w-7xl mx-auto px-4 md:px-12 py-12">
                 {/* Breadcrumb */}
-                <div className="flex items-center gap-2 text-on-surface-variant text-sm mb-8 flex-wrap">
+                <nav aria-label="Đường dẫn trang" className="flex items-center gap-2 text-on-surface-variant text-sm mb-8 flex-wrap">
                     <Link className="hover:text-primary transition-colors" to="/">Trang chủ</Link>
-                    <span className="material-symbols-outlined text-[16px]">chevron_right</span>
+                    <span className="material-symbols-outlined text-[16px]" aria-hidden="true">chevron_right</span>
                     <Link className="hover:text-primary transition-colors" to="/san-pham">Sản phẩm</Link>
-                    <span className="material-symbols-outlined text-[16px]">chevron_right</span>
+                    <span className="material-symbols-outlined text-[16px]" aria-hidden="true">chevron_right</span>
                     <span className="font-bold text-on-background line-clamp-1">{product.name}</span>
-                </div>
+                </nav>
 
                 {/* Product Hero Section */}
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-16">
                     {/* Left: Images */}
                     <div className="md:col-span-6 lg:col-span-7 flex flex-col gap-4">
-                        {/* Main image */}
+                        {/* Main image — PERF-01: không lazy (above the fold), PERF-02: width/height */}
                         <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden shadow-sm bg-surface-container-highest">
                             <img
                                 key={activeImg}
                                 alt={product.name}
                                 src={activeImg}
+                                width={800}
+                                height={600}
+                                fetchpriority="high"
+                                decoding="async"
                                 className="w-full h-full object-cover transition-opacity duration-300"
                                 onError={e => { e.target.onerror = null; e.target.src = FALLBACK_IMG; }}
                             />
@@ -268,18 +267,25 @@ export default function ProductDetailsPage() {
                             )}
                         </div>
 
-                        {/* Thumbnails */}
+                        {/* Thumbnails — PERF-01: lazy load, PERF-02: width/height */}
                         {images.length > 1 && (
-                            <div className="grid grid-cols-4 gap-3">
+                            <div className="grid grid-cols-4 gap-3" role="list" aria-label="Ảnh sản phẩm">
                                 {images.map((img, idx) => (
                                     <button
                                         key={idx}
+                                        role="listitem"
                                         onClick={() => setActiveImg(img)}
+                                        aria-label={`Xem ảnh ${idx + 1} của ${product.name}`}
+                                        aria-pressed={activeImg === img}
                                         className={`aspect-square rounded-lg overflow-hidden border-2 transition-colors ${activeImg === img ? 'border-primary' : 'border-transparent hover:border-primary/50'}`}
                                     >
                                         <img
                                             src={img}
-                                            alt={`Ảnh ${idx + 1}`}
+                                            alt={`${product.name} — ảnh ${idx + 1}`}
+                                            width={200}
+                                            height={200}
+                                            loading="lazy"
+                                            decoding="async"
                                             className="w-full h-full object-cover"
                                             onError={e => { e.target.onerror = null; e.target.src = FALLBACK_IMG; }}
                                         />
@@ -338,9 +344,10 @@ export default function ProductDetailsPage() {
                                 href="https://zalo.me/0349323539"
                                 target="_blank"
                                 rel="noopener noreferrer"
+                                aria-label={`Liên hệ báo giá sản phẩm ${product.name} qua Zalo`}
                                 className="w-full bg-[#1A365D] hover:bg-[#122643] text-white font-bold uppercase tracking-wide py-4 px-8 rounded transition-colors shadow-sm hover:shadow-md flex items-center justify-center gap-2"
                             >
-                                <span className="material-symbols-outlined">call</span>
+                                <span className="material-symbols-outlined" aria-hidden="true">call</span>
                                 LIÊN HỆ BÁO GIÁ
                             </a>
                             <p className="text-center text-sm text-on-surface-variant mt-4">Cam kết chất lượng 100% tự nhiên, không hóa chất bảo quản.</p>
@@ -350,13 +357,14 @@ export default function ProductDetailsPage() {
 
                 {/* Related Products Section */}
                 {relatedProducts.length > 0 && (
-                    <div>
+                    <section aria-label="Sản phẩm liên quan">
                         <div className="flex justify-between items-end mb-8 border-t border-surface-variant pt-12">
                             <h2 className="text-2xl md:text-3xl font-bold text-on-background">Sản Phẩm Liên Quan</h2>
                             <Link className="text-sm text-primary hover:underline font-bold hidden md:block" to="/san-pham">
                                 Xem tất cả
                             </Link>
                         </div>
+                        {/* PERF-01: ProductCard bên trong nên dùng loading="lazy" */}
                         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-5">
                             {relatedProducts.map(p => (
                                 <ProductCard key={p.id} product={p} />
@@ -365,7 +373,7 @@ export default function ProductDetailsPage() {
                         <Link className="text-sm text-primary hover:underline font-bold block text-center mt-6 md:hidden" to="/san-pham">
                             Xem tất cả sản phẩm
                         </Link>
-                    </div>
+                    </section>
                 )}
             </main>
         </>

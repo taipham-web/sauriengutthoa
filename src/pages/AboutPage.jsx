@@ -21,7 +21,7 @@ export default function AboutPage() {
                     <span className="text-amber-400 font-bold tracking-widest uppercase text-sm md:text-base mb-6 block [text-shadow:_0_1px_5px_rgb(0_0_0_/_0.5)]">
                         {t('aboutBanner')}
                     </span>
-                    <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white uppercase tracking-tighter leading-tight [text-shadow:_0_2px_10px_rgb(0_0_0_/_0.8)]">
+                    <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold text-white uppercase tracking-tighter leading-tight [text-shadow:_0_2px_10px_rgb(0_0_0_/_0.8)] px-2">
                         {t('aboutTitle1')} <br /> {t('aboutTitle2')}
                     </h1>
                     <p className="text-white/90 text-xl md:text-2xl mt-8 max-w-2xl mx-auto font-medium [text-shadow:_0_1px_5px_rgb(0_0_0_/_0.5)]">

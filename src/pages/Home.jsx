@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { ShoppingCart, Leaf, Sun, Truck } from 'lucide-react';
+import { ShoppingCart, Camera, ShieldCheck, Leaf } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 import SEO from '../components/SEO';
 import { db } from '../config/firebase';
 import { collection, getDocs, orderBy, query, limit } from 'firebase/firestore';
@@ -16,34 +17,72 @@ const STATIC_PRODUCTS = [
 const FALLBACK_IMG = 'https://images.unsplash.com/photo-1596450514735-37330528246a?w=800&q=80';
 const ORCHARD_IMG = '/vuon.jpg';
 
+// SEO-04: LocalBusiness JSON-LD Schema — hiển thị Knowledge Panel trên Google
+const LOCAL_BUSINESS_SCHEMA = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    name: 'Vựa Sầu Riêng Út Thoa',
+    image: 'https://sauriengutthoa.vn/logo.jpg',
+    description: 'Vựa sầu riêng Út Thoa chuyên cung cấp sầu riêng Ri6, Monthong chất lượng cao, chín cây tự nhiên từ Bến Tre. Bao ăn 1 đổi 1.',
+    url: 'https://sauriengutthoa.vn',
+    telephone: '+84349323539',
+    priceRange: 'Liên hệ báo giá',
+    address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'Tân Thạnh, Tân Thiềng',
+        addressLocality: 'Chợ Lách',
+        addressRegion: 'Bến Tre',
+        addressCountry: 'VN',
+    },
+    openingHoursSpecification: {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+        opens: '07:00',
+        closes: '20:00',
+    },
+    sameAs: [
+        'https://www.facebook.com/sauriengutthoa',
+        'https://zalo.me/0349323539',
+    ],
+});
+
 export default function Home() {
     const { t } = useTranslation();
     const [latestProducts, setLatestProducts] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    // CODE-01: isMounted flag tránh memory leak khi unmount trong lúc fetch
     useEffect(() => {
+        let isMounted = true;
         const fetchLatest = async () => {
             try {
                 const q = query(collection(db, 'products'), orderBy('createdAt', 'desc'), limit(3));
                 const snap = await getDocs(q);
+                if (!isMounted) return;
                 const data = snap.docs.map(d => ({ id: d.id, ...d.data() }));
                 setLatestProducts(data.length > 0 ? data : STATIC_PRODUCTS);
             } catch {
-                setLatestProducts(STATIC_PRODUCTS);
+                if (isMounted) setLatestProducts(STATIC_PRODUCTS);
             } finally {
-                setLoading(false);
+                if (isMounted) setLoading(false);
             }
         };
         fetchLatest();
+        return () => { isMounted = false; };
     }, []);
 
     return (
         <div className="font-sans">
-            <SEO 
-                title={t('header.home', { defaultValue: 'Trang Chủ' })} 
+            <SEO
+                title={t('header.home', { defaultValue: 'Trang Chủ' })}
                 description="Vựa sầu riêng Út Thoa chuyên cung cấp sỉ và lẻ các loại sầu riêng Ri6, Monthong Thái cắt tại vườn. Bao sượng, bao ăn 1 đổi 1."
                 image="/vuon.jpg"
+                url="https://sauriengutthoa.vn"
             />
+            {/* SEO-04: LocalBusiness schema cho Google Knowledge Panel */}
+            <Helmet>
+                <script type="application/ld+json">{LOCAL_BUSINESS_SCHEMA}</script>
+            </Helmet>
 
             {/* ── HERO SECTION ── */}
             <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-[#faf9f6]">
@@ -72,6 +111,7 @@ export default function Home() {
                                 href="https://zalo.me/0349323539"
                                 target="_blank"
                                 rel="noopener noreferrer"
+                                aria-label="Đặt hàng sầu riêng qua Zalo"
                                 className="bg-gradient-to-r from-[#7e5700] to-[#ffb300] text-white px-10 py-4 rounded-full font-bold text-lg shadow-xl shadow-amber-400/30 hover:scale-105 transition-transform"
                             >
                                 {t('orderNow')}
@@ -85,12 +125,16 @@ export default function Home() {
                         </div>
                     </div>
 
-                    {/* Right image */}
+                    {/* Right image — PERF-01: fetchpriority="high" vì là LCP image, PERF-02: width/height */}
                     <div className="relative flex items-center justify-center">
                         <div className="absolute -top-16 -right-16 w-80 h-80 bg-amber-300/20 rounded-full blur-3xl pointer-events-none" />
                         <img
                             src="/durian.jpg"
-                            alt="Sầu riêng cao cấp"
+                            alt="Sầu riêng cao cấp Ri6 Út Thoa"
+                            width={800}
+                            height={600}
+                            fetchpriority="high"
+                            decoding="async"
                             className="relative z-10 w-full max-h-[600px] object-cover rounded-[2rem] shadow-2xl rotate-2 hover:rotate-0 transition-transform duration-700"
                             onError={e => { e.target.src = FALLBACK_IMG; }}
                         />
@@ -105,9 +149,14 @@ export default function Home() {
                         {/* image side */}
                         <div className="md:col-span-5 order-2 md:order-1">
                             <div className="relative">
+                                {/* PERF-01: lazy load vì below-fold, PERF-02: width/height */}
                                 <img
                                     src={ORCHARD_IMG}
-                                    alt="Vườn sầu riêng"
+                                    alt="Vườn sầu riêng Út Thoa tại Bến Tre"
+                                    width={600}
+                                    height={750}
+                                    loading="lazy"
+                                    decoding="async"
                                     className="w-full aspect-[4/5] object-cover rounded-2xl shadow-2xl"
                                     onError={e => { e.target.src = FALLBACK_IMG; }}
                                 />
@@ -157,7 +206,7 @@ export default function Home() {
                     </div>
 
                     {loading ? (
-                        <div className="flex justify-center py-20">
+                        <div className="flex justify-center py-20" aria-label="Đang tải sản phẩm">
                             <div className="animate-spin rounded-full h-10 w-10 border-4 border-amber-500 border-t-transparent" />
                         </div>
                     ) : (
@@ -183,9 +232,9 @@ export default function Home() {
             <section className="py-20 bg-[#e9e8e5]">
                 <div className="max-w-7xl mx-auto px-6 md:px-10">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-                        <WhyCard icon={<Leaf className="w-10 h-10" />} title={t('why1Title')} desc={t('why1Desc')} color="bg-green-100 text-green-700" />
-                        <WhyCard icon={<Sun className="w-10 h-10" />} title={t('why2Title')} desc={t('why2Desc')} color="bg-amber-100 text-amber-700" />
-                        <WhyCard icon={<Truck className="w-10 h-10" />} title={t('why3Title')} desc={t('why3Desc')} color="bg-blue-100 text-blue-700" />
+                        <WhyCard icon={<Camera className="w-10 h-10" aria-hidden="true" />} title={t('why1Title')} desc={t('why1Desc')} color="bg-blue-100 text-blue-700" />
+                        <WhyCard icon={<ShieldCheck className="w-10 h-10" aria-hidden="true" />} title={t('why2Title')} desc={t('why2Desc')} color="bg-amber-100 text-amber-700" />
+                        <WhyCard icon={<Leaf className="w-10 h-10" aria-hidden="true" />} title={t('why3Title')} desc={t('why3Desc')} color="bg-green-100 text-green-700" />
                     </div>
                 </div>
             </section>
@@ -205,9 +254,14 @@ function EditorialProductCard({ product }) {
     return (
         <div className="group bg-white rounded-2xl p-5 shadow-md hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col border border-gray-100">
             <div className="relative overflow-hidden rounded-xl mb-5 bg-gray-100">
+                {/* PERF-01: lazy, PERF-02: width/height */}
                 <img
                     src={product.imgSrc}
                     alt={product.name}
+                    width={600}
+                    height={288}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-72 object-cover group-hover:scale-110 transition-transform duration-500"
                     onError={e => { e.target.src = 'https://images.unsplash.com/photo-1596450514735-37330528246a?w=600&q=80'; }}
                 />
@@ -242,10 +296,10 @@ function EditorialProductCard({ product }) {
                             href="https://zalo.me/0349323539"
                             target="_blank"
                             rel="noopener noreferrer"
+                            aria-label={`Liên hệ đặt hàng ${product.name} qua Zalo`}
                             className="w-11 h-11 rounded-full bg-gradient-to-br from-[#7e5700] to-[#ffb300] text-white flex items-center justify-center shadow-lg hover:scale-110 active:scale-95 transition-transform text-lg"
-                            title={t('consultOrder')}
                         >
-                            <ShoppingCart className="w-5 h-5" />
+                            <ShoppingCart className="w-5 h-5" aria-hidden="true" />
                         </a>
                     )}
                 </div>
@@ -261,7 +315,7 @@ function WhyCard({ icon, title, desc, color }) {
             <div className={`w-20 h-20 rounded-full ${color} flex items-center justify-center text-4xl shadow-inner`}>
                 {icon}
             </div>
-            <h4 className="font-bold text-xl text-gray-900">{title}</h4>
+            <h3 className="font-bold text-xl text-gray-900">{title}</h3>
             <p className="text-gray-500 leading-relaxed">{desc}</p>
         </div>
     );

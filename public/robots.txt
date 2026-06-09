@@ -1,6 +1,8 @@
 User-agent: *
 Allow: /
-Disallow: /admin
-Disallow: /admin/*
 
-Sitemap: https://sauriengutthoa.com/sitemap.xml
+# Ngăn bot index trang quản trị
+Disallow: /quan-ly-kho-2026/
+
+# Khai báo sitemap
+Sitemap: https://sauriengutthoa.vn/sitemap.xml
