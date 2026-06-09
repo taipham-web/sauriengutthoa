@@ -56,7 +56,7 @@ export default function PreservationGuidePage() {
                         <img
                             alt="Fresh durian in a woven basket"
                             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                            src="/anh_sr.jpg"
+                            src="/anh_sr.webp"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
                     </figure>
@@ -160,7 +160,7 @@ export default function PreservationGuidePage() {
                                                 <img
                                                     alt="Cách chọn sầu riêng"
                                                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                                                    src="/cach_chon_sr.jpg"
+                                                    src="/cach_chon_sr.webp"
                                                 />
                                             </div>
                                             <div>
@@ -176,7 +176,7 @@ export default function PreservationGuidePage() {
                                                 <img
                                                     alt="Sầu riêng chế biến"
                                                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                                                    src="/banh_crepe.jpg"
+                                                    src="/banh_crepe.webp"
                                                 />
                                             </div>
                                             <div>

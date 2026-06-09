@@ -27,7 +27,7 @@ export default function NutritionGuidePage() {
                 {/* Hero Section */}
                 <section className="relative w-full h-[618px] min-h-[500px] flex items-end pb-20 px-6 md:px-12">
                     <div className="absolute inset-0 z-0">
-                        <img alt="Durian Hero" className="w-full h-full object-cover"src="/SR_trai.jpg" />
+                        <img alt="Durian Hero" className="w-full h-full object-cover"src="/SR_trai.webp" />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#182810]/90 via-[#182810]/40 to-transparent"></div>
                     </div>
                     <div className="relative z-10 max-w-[1140px] mx-auto w-full">
@@ -196,9 +196,9 @@ export default function NutritionGuidePage() {
                         <h2 className="font-serif text-[24px] font-bold text-[#182810] mb-8 text-center">{t('relatedArticles')}</h2>
                         <div className="grid md:grid-cols-3 gap-6">
                             {[
-                                { to: "/kien-thuc/chon-sau-rieng", tag: 'selTag', tagColor: "text-amber-600", title: 'selTitle', img: "/cach_chon_sr.jpg" },
-                                { to: "/kien-thuc/bao-quan-sau-rieng", tag: 'presTag', tagColor: "text-emerald-700", title: 'presTitle', img: "/anh_sr.jpg" },
-                                { to: "/kien-thuc/am-thuc-sau-rieng", tag: 'culTag', tagColor: "text-rose-600", title: 'culTitle', img: "/anh_sr1.jpg" },
+                                { to: "/kien-thuc/chon-sau-rieng", tag: 'selTag', tagColor: "text-amber-600", title: 'selTitle', img: "/cach_chon_sr.webp" },
+                                { to: "/kien-thuc/bao-quan-sau-rieng", tag: 'presTag', tagColor: "text-emerald-700", title: 'presTitle', img: "/anh_sr.webp" },
+                                { to: "/kien-thuc/am-thuc-sau-rieng", tag: 'culTag', tagColor: "text-rose-600", title: 'culTitle', img: "/anh_sr1.webp" },
                             ].map(item => (
                                 <Link key={item.to} to={item.to} className="group rounded-2xl overflow-hidden border border-stone-200 hover:shadow-md transition-all duration-300 bg-white">
                                     <div className="h-48 overflow-hidden">

@@ -5,7 +5,7 @@ const SEO = ({ title, description, image, url }) => {
   // Lấy URL mặc định từ web của bạn, hoặc URL được truyền vào
   const currentUrl = url || (typeof window !== 'undefined' ? window.location.href : '');
   // Ảnh mặc định nếu bài viết không có ảnh
-  const defaultImage = "/logo.jpg"; 
+  const defaultImage = "/logo.webp"; 
 
   return (
     <Helmet>

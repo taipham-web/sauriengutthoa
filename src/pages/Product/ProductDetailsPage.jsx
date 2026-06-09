@@ -17,7 +17,7 @@ const MOCK_PRODUCTS = [
         images: [                    // Mảng ảnh cho gallery trang chi tiết
             '/ri6.jpg',
             '/ri6-tach.jpg',
-            '/vuon.jpg',
+            '/vuon.webp',
         ],
         badge: 'Bán chạy',
         origin: 'Bến Tre, Việt Nam',

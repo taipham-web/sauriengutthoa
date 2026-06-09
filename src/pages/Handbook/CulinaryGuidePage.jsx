@@ -12,7 +12,7 @@ const dishes = [
         title: 'dish1Title',
         desc: 'dish1Desc',
         tip: 'dish1Tip',
-        img: "/banh_crepe.jpg"
+        img: "/banh_crepe.webp"
     },
     {
         num: "02",
@@ -83,7 +83,7 @@ export default function CulinaryGuidePage() {
                         <img
                             alt="Culinary Guide Hero"
                             className="w-full h-full object-cover"
-                            src="/Hero.jpg"
+                            src="/Hero.webp"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#182810]/90 via-[#182810]/40 to-transparent"></div>
                     </div>
@@ -233,7 +233,7 @@ export default function CulinaryGuidePage() {
                                     <img
                                         alt="Bảo quản sầu riêng"
                                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                                        src="/anh_sr.jpg"
+                                        src="/anh_sr.webp"
                                     />
                                 </div>
                                 <div>
@@ -248,7 +248,7 @@ export default function CulinaryGuidePage() {
                                     <img
                                         alt="Dinh dưỡng sầu riêng"
                                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                                        src="/anh_sr2.jpg"
+                                        src="/anh_sr2.webp"
                                     />
                                 </div>
                                 <div>

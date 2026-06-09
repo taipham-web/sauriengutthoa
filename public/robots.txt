@@ -1,6 +1,6 @@
 User-agent: *
 Allow: /
-Disallow: /admin
-Disallow: /admin/*
+Disallow: /quan-ly-kho-2026
+Disallow: /quan-ly-kho-2026/*
 
 Sitemap: https://sauriengutthoa.com/sitemap.xml

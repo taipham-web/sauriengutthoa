@@ -14,7 +14,7 @@ const STATIC_PRODUCTS = [
 ];
 
 const FALLBACK_IMG = 'https://images.unsplash.com/photo-1596450514735-37330528246a?w=800&q=80';
-const ORCHARD_IMG = '/vuon.jpg';
+const ORCHARD_IMG = '/vuon.webp';
 
 export default function Home() {
     const { t } = useTranslation();
@@ -42,7 +42,7 @@ export default function Home() {
             <SEO 
                 title={t('header.home', { defaultValue: 'Trang Chủ' })} 
                 description="Vựa sầu riêng Út Thoa chuyên cung cấp sỉ và lẻ các loại sầu riêng Ri6, Monthong Thái cắt tại vườn. Bao sượng, bao ăn 1 đổi 1."
-                image="/vuon.jpg"
+                image="/vuon.webp"
             />
 
             {/* ── HERO SECTION ── */}
@@ -89,7 +89,7 @@ export default function Home() {
                     <div className="relative flex items-center justify-center">
                         <div className="absolute -top-16 -right-16 w-80 h-80 bg-amber-300/20 rounded-full blur-3xl pointer-events-none" />
                         <img
-                            src="/durian.jpg"
+                            src="/durian.webp"
                             alt="Sầu riêng cao cấp"
                             className="relative z-10 w-full max-h-[600px] object-cover rounded-[2rem] shadow-2xl rotate-2 hover:rotate-0 transition-transform duration-700"
                             onError={e => { e.target.src = FALLBACK_IMG; }}

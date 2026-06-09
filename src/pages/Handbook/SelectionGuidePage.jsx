@@ -93,7 +93,7 @@ export default function SelectionGuidePage() {
                         <img
                             alt="Chọn sầu riêng chín ngon"
                             className="w-full h-full object-cover"
-                            src="/cach_chon_sr.jpg"
+                            src="/cach_chon_sr.webp"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#182810]/90 via-[#182810]/40 to-transparent"></div>
                     </div>
@@ -264,9 +264,9 @@ export default function SelectionGuidePage() {
                         <h2 className="font-serif text-[24px] font-bold text-[#182810] mb-8 text-center">{t('relatedArticles')}</h2>
                         <div className="grid md:grid-cols-3 gap-6">
                             {[
-                                { to: "/kien-thuc/bao-quan-sau-rieng", tag: 'presTag', tagColor: "text-emerald-700", title: 'presTitle', img: "/anh_sr.jpg" },
-                                { to: "/kien-thuc/dinh-duong-sau-rieng", tag: 'nutriTag', tagColor: "text-amber-600", title: 'nutriTitle', img: "/anh_sr2.jpg" },
-                                { to: "/kien-thuc/am-thuc-sau-rieng", tag: 'culTag', tagColor: "text-rose-600", title: 'culTitle', img: "/anh_sr1.jpg" },
+                                { to: "/kien-thuc/bao-quan-sau-rieng", tag: 'presTag', tagColor: "text-emerald-700", title: 'presTitle', img: "/anh_sr.webp" },
+                                { to: "/kien-thuc/dinh-duong-sau-rieng", tag: 'nutriTag', tagColor: "text-amber-600", title: 'nutriTitle', img: "/anh_sr2.webp" },
+                                { to: "/kien-thuc/am-thuc-sau-rieng", tag: 'culTag', tagColor: "text-rose-600", title: 'culTitle', img: "/anh_sr1.webp" },
                             ].map(item => (
                                 <Link key={item.to} to={item.to} className="group rounded-2xl overflow-hidden border border-stone-200 hover:shadow-md transition-all duration-300">
                                     <div className="h-48 overflow-hidden">
