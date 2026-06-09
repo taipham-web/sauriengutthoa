@@ -1,47 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://sauriengutthoa.com/</loc>
+    <loc>https://sauriengutthoa.shop/</loc>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://sauriengutthoa.com/san-pham</loc>
+    <loc>https://sauriengutthoa.shop/san-pham</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://sauriengutthoa.com/gioi-thieu</loc>
+    <loc>https://sauriengutthoa.shop/gioi-thieu</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://sauriengutthoa.com/lien-he</loc>
+    <loc>https://sauriengutthoa.shop/lien-he</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://sauriengutthoa.com/cam-nang</loc>
+    <loc>https://sauriengutthoa.shop/cam-nang</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://sauriengutthoa.com/kien-thuc/bao-quan-sau-rieng</loc>
+    <loc>https://sauriengutthoa.shop/kien-thuc/bao-quan-sau-rieng</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://sauriengutthoa.com/kien-thuc/dinh-duong-sau-rieng</loc>
+    <loc>https://sauriengutthoa.shop/kien-thuc/dinh-duong-sau-rieng</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://sauriengutthoa.com/kien-thuc/am-thuc-sau-rieng</loc>
+    <loc>https://sauriengutthoa.shop/kien-thuc/am-thuc-sau-rieng</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://sauriengutthoa.com/kien-thuc/chon-sau-rieng</loc>
+    <loc>https://sauriengutthoa.shop/kien-thuc/chon-sau-rieng</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
