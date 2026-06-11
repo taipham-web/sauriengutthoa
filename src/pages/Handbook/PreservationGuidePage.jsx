@@ -2,11 +2,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import SEO from '../../components/SEO';
 
 export default function PreservationGuidePage() {
     const { t } = useTranslation();
     return (
         <div className="min-h-screen font-body bg-background text-on-surface">
+            <SEO 
+                title={t('presTitle')} 
+                description={t('presMetaDesc')}
+                image="/anh_sr.webp"
+                type="article"
+                article={{ datePublished: '2024-06-01', dateModified: '2025-06-11' }}
+            />
             {/* Top AppBar */}
             <div className="flex justify-between items-center w-full px-6 py-4 sticky top-20 bg-background/90 backdrop-blur-md z-40 border-b border-outline-variant/30 shadow-sm">
                 <Link className="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors" to="/cam-nang">

@@ -37,6 +37,7 @@ export default function ProductsPage() {
     const { t } = useTranslation();
     const [searchParams] = useSearchParams();
     const searchQuery = searchParams.get('search') || '';
+    const urlVariety = searchParams.get('variety');
 
     const [products, setProducts] = useState(productsData);
     const [categories, setCategories] = useState([]);
@@ -44,11 +45,19 @@ export default function ProductsPage() {
 
     // ── Filter states ──
     const [selectedCategories, setSelectedCategories] = useState([]); // slugs
-    const [selectedVarieties, setSelectedVarieties] = useState([]); // keys
+    const [selectedVarieties, setSelectedVarieties] = useState(urlVariety ? [urlVariety] : []); // keys
     const [sortOrder, setSortOrder] = useState('newest'); // newest | price-asc | price-desc
     const [currentPage, setCurrentPage] = useState(1);
     const [sidebarOpen, setSidebarOpen] = useState(false); // mobile sidebar toggle
     const itemsPerPage = 6;
+
+    // ── Update selected varieties when URL params change ──
+    useEffect(() => {
+        const v = searchParams.get('variety');
+        if (v) {
+            setSelectedVarieties(prev => prev.includes(v) ? prev : [...prev, v]);
+        }
+    }, [searchParams]);
 
     // ── Fetch data ──
     useEffect(() => {
@@ -99,7 +108,7 @@ export default function ProductsPage() {
             if (selectedVarieties.length > 0) {
                 const nameLower = p.name.toLowerCase();
                 const match = selectedVarieties.some(v =>
-                    (VARIETY_KEYWORDS[v] || []).some(kw => nameLower.includes(kw))
+                    p.variety === v || (VARIETY_KEYWORDS[v] || []).some(kw => nameLower.includes(kw))
                 );
                 if (!match) return false;
             }

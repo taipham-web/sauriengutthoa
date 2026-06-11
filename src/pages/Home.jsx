@@ -129,7 +129,7 @@ export default function Home() {
                     <div className="relative flex items-center justify-center">
                         <div className="absolute -top-16 -right-16 w-80 h-80 bg-amber-300/20 rounded-full blur-3xl pointer-events-none" />
                         <img
-                            src="/durian.jpg"
+                            src="/durian.webp"
                             alt="Sầu riêng cao cấp Ri6 Út Thoa"
                             width={800}
                             height={600}

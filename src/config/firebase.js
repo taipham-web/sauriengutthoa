@@ -1,24 +1,26 @@
 // src/config/firebase.js
+//
+// 🔐 SECURITY: Tất cả keys đọc từ biến môi trường (.env) thay vì hardcode.
+// - Khi dev local: Vite tự đọc file .env
+// - Khi deploy Vercel: Thêm từng biến vào Settings → Environment Variables
+//
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { getStorage } from "firebase/storage";
 
-// TODO: QUAN TRỌNG - Bạn phải copy đoạn config từ Firebase Console của bạn dán đè lên đoạn này nhé
 const firebaseConfig = {
-    apiKey: "AIzaSyALuuViiTiNWn1abu-QxooH-T04_6l291s",
-    authDomain: "my-brand-web.firebaseapp.com",
-    projectId: "my-brand-web",
-    storageBucket: "my-brand-web.firebasestorage.app",
-    messagingSenderId: "563347552562",
-    appId: "1:563347552562:web:44f02facd0a1fdf132bf2b",
-    measurementId: "G-KTVVG2ZR8M"
+    apiKey:            import.meta.env.VITE_FIREBASE_API_KEY,
+    authDomain:        import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+    projectId:         import.meta.env.VITE_FIREBASE_PROJECT_ID,
+    storageBucket:     import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+    appId:             import.meta.env.VITE_FIREBASE_APP_ID,
+    measurementId:     import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
-// Khởi tạo Firebase
 const app = initializeApp(firebaseConfig);
 
-// Khởi tạo và xuất database để các file khác dùng
-export const db = getFirestore(app);
-export const auth = getAuth(app);
+export const db      = getFirestore(app);
+export const auth    = getAuth(app);
 export const storage = getStorage(app);

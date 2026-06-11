@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { db } from '../../config/firebase';
 import { doc, getDoc, collection, getDocs, limit, query } from 'firebase/firestore';
 import SEO from '../../components/SEO';
 import ProductCard from './ProductCard';
+import VarietyInfoCard from '../../components/VarietyInfoCard';
 
 const SITE_URL = 'https://sauriengutthoa.vn';
 
@@ -13,6 +15,7 @@ const MOCK_PRODUCTS = [
         id: '1',
         name: 'Sầu Riêng Ri6 Nguyên Trái',
         category: 'nguyen-trai',
+        variety: 'ri6',
         price: 'Liên hệ báo giá',
         desc: 'Cơm vàng, hạt lép, vị ngọt đậm đà, béo ngậy đặc trưng. Lựa chọn số 1 của khách hàng miền Tây.',
         imgSrc: '/ri6.jpg',
@@ -27,6 +30,7 @@ const MOCK_PRODUCTS = [
         id: '2',
         name: 'Sầu Riêng Monthong Nguyên Trái',
         category: 'nguyen-trai',
+        variety: 'monthong',
         price: 'Liên hệ báo giá',
         desc: 'Sầu riêng Thái cơm dày, ráo, vị ngọt thanh, mùi thơm nhẹ không quá gắt.',
         imgSrc: '/monthong.jpg',
@@ -41,6 +45,7 @@ const MOCK_PRODUCTS = [
         id: '3',
         name: 'Sầu Riêng Chuồng Bò Nguyên Trái',
         category: 'nguyen-trai',
+        variety: 'chuong-bo',
         price: 'Liên hệ báo giá',
         desc: 'Vị nhẫn đắng nhẹ đặc biệt, cơm mềm tan trong miệng, dành cho người sành ăn.',
         imgSrc: '/chuongbo.jpg',
@@ -55,6 +60,7 @@ const MOCK_PRODUCTS = [
         id: '4',
         name: 'Ri6 Tách Múi Sẵn',
         category: 'tach-mui',
+        variety: 'ri6',
         price: 'Liên hệ báo giá',
         desc: 'Múi to, đều, vàng ươm. Được tách sẵn, tiện lợi thưởng thức ngay không cần chờ đợi.',
         imgSrc: '/ri6-tach.jpg',
@@ -69,6 +75,7 @@ const MOCK_PRODUCTS = [
         id: '5',
         name: 'Monthong Tách Múi',
         category: 'tach-mui',
+        variety: 'monthong',
         price: 'Liên hệ báo giá',
         desc: 'Múi ráo, thịt dày. Phù hợp làm quà biếu tặng hoặc dùng trong gia đình.',
         imgSrc: '/monthong-tach.jpg',
@@ -123,6 +130,8 @@ const getMockFallback = (id) => {
 
 export default function ProductDetailsPage() {
     const { id } = useParams();
+    const { t, i18n } = useTranslation();
+    const lang = i18n.language;
     const [product, setProduct] = useState(null);
     const [relatedProducts, setRelatedProducts] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -180,27 +189,27 @@ export default function ProductDetailsPage() {
         return () => { isMounted = false; };
     }, [id]);
 
-    // ── Loading state ──────────────────────────────────────────────────────────
+    // ── Loading state ──────────────────────────────────────────
     if (loading) {
         return (
-            <div className="flex justify-center items-center min-h-[60vh]" aria-label="Đang tải sản phẩm">
+            <div className="flex justify-center items-center min-h-[60vh]" aria-label={t('pdLoading')}>
                 <div className="flex flex-col items-center gap-4">
                     <div className="animate-spin rounded-full h-12 w-12 border-4 border-amber-500 border-t-transparent" />
-                    <p className="text-on-surface-variant text-sm">Đang tải sản phẩm...</p>
+                    <p className="text-on-surface-variant text-sm">{t('pdLoading')}</p>
                 </div>
             </div>
         );
     }
 
-    // ── Not found state ────────────────────────────────────────────────────────
+    // ── Not found state ─────────────────────────────────────────
     if (!product) {
         return (
             <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4 px-4 text-center">
                 <div className="text-6xl" aria-hidden="true">🔍</div>
-                <h1 className="text-2xl font-bold text-on-background">Không tìm thấy sản phẩm</h1>
-                <p className="text-on-surface-variant">Sản phẩm bạn tìm có thể đã ngừng kinh doanh hoặc không tồn tại.</p>
+                <h1 className="text-2xl font-bold text-on-background">{t('pdNotFound')}</h1>
+                <p className="text-on-surface-variant">{t('pdNotFoundDesc')}</p>
                 <Link to="/san-pham" className="mt-2 px-6 py-3 bg-primary text-on-primary rounded-lg font-bold hover:opacity-90 transition-opacity">
-                    Quay lại trang sản phẩm
+                    {t('pdBackToProducts')}
                 </Link>
             </div>
         );
@@ -226,12 +235,14 @@ export default function ProductDetailsPage() {
             />
             <main className="flex-grow w-full max-w-7xl mx-auto px-4 md:px-12 py-12">
                 {/* Breadcrumb */}
-                <nav aria-label="Đường dẫn trang" className="flex items-center gap-2 text-on-surface-variant text-sm mb-8 flex-wrap">
-                    <Link className="hover:text-primary transition-colors" to="/">Trang chủ</Link>
+                <nav aria-label={t('pdBreadcrumb')} className="flex items-center gap-2 text-on-surface-variant text-sm mb-8 flex-wrap">
+                    <Link className="hover:text-primary transition-colors" to="/">{t('home')}</Link>
                     <span className="material-symbols-outlined text-[16px]" aria-hidden="true">chevron_right</span>
-                    <Link className="hover:text-primary transition-colors" to="/san-pham">Sản phẩm</Link>
+                    <Link className="hover:text-primary transition-colors" to="/san-pham">{t('products')}</Link>
                     <span className="material-symbols-outlined text-[16px]" aria-hidden="true">chevron_right</span>
-                    <span className="font-bold text-on-background line-clamp-1">{product.name}</span>
+                    <span className="font-bold text-on-background line-clamp-1">
+                        {lang !== 'vi' && product[`name_${lang}`] ? product[`name_${lang}`] : product.name}
+                    </span>
                 </nav>
 
                 {/* Product Hero Section */}
@@ -300,14 +311,16 @@ export default function ProductDetailsPage() {
                         {/* Category tag */}
                         <div className="flex gap-2 mb-3">
                             <span className="inline-block px-2 py-1 bg-secondary-container text-on-secondary-container rounded text-xs font-bold uppercase tracking-wider">
-                                {product.category === 'nguyen-trai' ? 'Nguyên trái'
-                                    : product.category === 'tach-mui' ? 'Tách múi'
-                                    : product.category === 'cap-dong' ? 'Cấp đông'
-                                    : 'Sản phẩm nổi bật'}
+                                {product.category === 'nguyen-trai' ? t('categoryWhole')
+                                    : product.category === 'tach-mui' ? t('categoryPeeled')
+                                    : product.category === 'cap-dong' ? t('categoryFrozen')
+                                    : t('productsTitle')}
                             </span>
                         </div>
 
-                        <h1 className="text-3xl md:text-4xl font-bold text-on-background mb-4">{product.name}</h1>
+                        <h1 className="text-3xl md:text-4xl font-bold text-on-background mb-4">
+                            {lang !== 'vi' && product[`name_${lang}`] ? product[`name_${lang}`] : product.name}
+                        </h1>
 
                         {/* Price */}
                         {product.price && (
@@ -318,22 +331,22 @@ export default function ProductDetailsPage() {
 
                         {/* Thông tin chi tiết */}
                         <div className="bg-surface-container-low rounded-xl p-6 mb-8 border border-surface-variant">
-                            <h3 className="text-lg font-bold mb-4 text-on-surface">Thông tin chi tiết</h3>
+                            <h3 className="text-lg font-bold mb-4 text-on-surface">{t('pdDetailInfo')}</h3>
                             <ul className="flex flex-col gap-3 text-sm text-on-surface-variant">
                                 <li className="flex justify-between border-b border-surface-variant pb-2">
-                                    <span className="font-bold">Xuất xứ:</span>
+                                    <span className="font-bold">{t('pdOrigin')}:</span>
                                     <span>{product.origin || 'Bến Tre, Việt Nam'}</span>
                                 </li>
                                 <li className="flex justify-between border-b border-surface-variant pb-2">
-                                    <span className="font-bold">Trọng lượng:</span>
+                                    <span className="font-bold">{t('pdWeight')}:</span>
                                     <span>{product.weight || product.price}</span>
                                 </li>
                                 <li className="flex justify-between border-b border-surface-variant pb-2">
-                                    <span className="font-bold">Hạn sử dụng:</span>
+                                    <span className="font-bold">{t('pdShelf')}:</span>
                                     <span>{product.shelf || '3-5 ngày (bảo quản lạnh)'}</span>
                                 </li>
                                 <li className="flex justify-between pb-2">
-                                    <span className="font-bold">Bảo quản:</span>
+                                    <span className="font-bold">{t('pdStorage')}:</span>
                                     <span>{product.storage || 'Ngăn mát tủ lạnh (4-8°C)'}</span>
                                 </li>
                             </ul>
@@ -344,24 +357,27 @@ export default function ProductDetailsPage() {
                                 href="https://zalo.me/0349323539"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                aria-label={`Liên hệ báo giá sản phẩm ${product.name} qua Zalo`}
+                                aria-label={t('pdContactAria', { name: lang !== 'vi' && product[`name_${lang}`] ? product[`name_${lang}`] : product.name })}
                                 className="w-full bg-[#1A365D] hover:bg-[#122643] text-white font-bold uppercase tracking-wide py-4 px-8 rounded transition-colors shadow-sm hover:shadow-md flex items-center justify-center gap-2"
                             >
                                 <span className="material-symbols-outlined" aria-hidden="true">call</span>
-                                LIÊN HỆ BÁO GIÁ
+                                {t('pdContactBtn')}
                             </a>
-                            <p className="text-center text-sm text-on-surface-variant mt-4">Cam kết chất lượng 100% tự nhiên, không hóa chất bảo quản.</p>
+                            <p className="text-center text-sm text-on-surface-variant mt-4">{t('pdQualityNote')}</p>
                         </div>
                     </div>
                 </div>
 
+                {/* Variety Info Card */}
+                {product.variety && <VarietyInfoCard varietyId={product.variety} />}
+
                 {/* Related Products Section */}
                 {relatedProducts.length > 0 && (
-                    <section aria-label="Sản phẩm liên quan">
+                    <section aria-label={t('pdRelated')}>
                         <div className="flex justify-between items-end mb-8 border-t border-surface-variant pt-12">
-                            <h2 className="text-2xl md:text-3xl font-bold text-on-background">Sản Phẩm Liên Quan</h2>
+                            <h2 className="text-2xl md:text-3xl font-bold text-on-background">{t('pdRelated')}</h2>
                             <Link className="text-sm text-primary hover:underline font-bold hidden md:block" to="/san-pham">
-                                Xem tất cả
+                                {t('pdViewAll')}
                             </Link>
                         </div>
                         {/* PERF-01: ProductCard bên trong nên dùng loading="lazy" */}
@@ -371,7 +387,7 @@ export default function ProductDetailsPage() {
                             ))}
                         </div>
                         <Link className="text-sm text-primary hover:underline font-bold block text-center mt-6 md:hidden" to="/san-pham">
-                            Xem tất cả sản phẩm
+                            {t('pdViewAllMobile')}
                         </Link>
                     </section>
                 )}
