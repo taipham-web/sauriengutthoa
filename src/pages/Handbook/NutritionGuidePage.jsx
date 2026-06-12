@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import SEO from '../../components/SEO';
 
 export default function NutritionGuidePage() {
     const { t } = useTranslation();
@@ -11,6 +12,13 @@ export default function NutritionGuidePage() {
 
     return (
         <div className="bg-[#fbf9f4] text-[#1b1c19] antialiased selection:bg-[#fdd65e] selection:text-[#745c00] min-h-screen">
+            <SEO 
+                title={t('nutriTitle')} 
+                description={t('nutriMetaDesc')}
+                image="/SR_trai.webp"
+                type="article"
+                article={{ datePublished: '2024-06-01', dateModified: '2025-06-11' }}
+            />
             {/* Top AppBar */}
             <div className="flex justify-between items-center w-full px-6 py-4 sticky top-20 bg-[#fbf9f4]/90 backdrop-blur-md z-40 border-b border-stone-200 shadow-sm">
                 <Link className="flex items-center gap-2 text-stone-600 hover:text-emerald-700 transition-colors" to="/cam-nang">
@@ -27,7 +35,7 @@ export default function NutritionGuidePage() {
                 {/* Hero Section */}
                 <section className="relative w-full h-[618px] min-h-[500px] flex items-end pb-20 px-6 md:px-12">
                     <div className="absolute inset-0 z-0">
-                        <img alt="Durian Hero" className="w-full h-full object-cover"src="/SR_trai.webp" />
+                        <img alt="Durian Hero" fetchpriority="high" decoding="async" className="w-full h-full object-cover" src="/SR_trai.webp" />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#182810]/90 via-[#182810]/40 to-transparent"></div>
                     </div>
                     <div className="relative z-10 max-w-[1140px] mx-auto w-full">

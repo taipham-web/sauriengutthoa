@@ -19,6 +19,7 @@ export default function AdminProductsTab() {
   const [formData, setFormData] = useState({
     name: '',
     category: 'nguyen-trai',
+    variety: '',
     desc: '',
     imgSrc: '',
     images: [],   // ← Mảng lưu nhiều ảnh gallery
@@ -137,7 +138,7 @@ export default function AdminProductsTab() {
 
   const handleAddNew = () => {
     setEditingId(null);
-    setFormData({ name: '', category: 'nguyen-trai', desc: '', imgSrc: '', images: [], badge: '', isOutOfStock: false });
+    setFormData({ name: '', category: 'nguyen-trai', variety: '', desc: '', imgSrc: '', images: [], badge: '', isOutOfStock: false });
     setShowForm(true);
   };
 
@@ -146,6 +147,7 @@ export default function AdminProductsTab() {
     setFormData({
       name: product.name || '',
       category: product.category || 'nguyen-trai',
+      variety: product.variety || '',
       desc: product.desc || '',
       imgSrc: product.imgSrc || '',
       images: product.images || (product.imgSrc ? [product.imgSrc] : []),
@@ -295,8 +297,8 @@ export default function AdminProductsTab() {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Row 1: Tên + Danh mục */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Row 1: Tên + Danh mục + Giống */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Tên sản phẩm *</label>
                 <input required type="text" name="name" value={formData.name} onChange={handleChange}
@@ -309,6 +311,17 @@ export default function AdminProductsTab() {
                   className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:border-amber-500 bg-white">
                   <option value="">-- Chọn danh mục --</option>
                   {categories.map(c => <option key={c.id} value={c.slug}>{c.name}</option>)}
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Giống sầu riêng</label>
+                <select name="variety" value={formData.variety} onChange={handleChange}
+                  className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:border-amber-500 bg-white">
+                  <option value="">-- Không phân loại --</option>
+                  <option value="ri6">Ri6</option>
+                  <option value="monthong">Monthong (Thái)</option>
+                  <option value="chuong-bo">Chuồng Bò</option>
+                  <option value="musang-king">Musang King</option>
                 </select>
               </div>
             </div>

@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import SEO from '../../components/SEO';
 
 const tips = [
     {
@@ -74,6 +75,13 @@ export default function SelectionGuidePage() {
 
     return (
         <div className="bg-[#fbf9f4] text-[#1b1c19] antialiased selection:bg-[#fdd65e] selection:text-[#745c00] min-h-screen">
+            <SEO 
+                title={t('selTitle')} 
+                description={t('selMetaDesc')}
+                image="/cach_chon_sr.webp"
+                type="article"
+                article={{ datePublished: '2024-06-01', dateModified: '2025-06-11' }}
+            />
             {/* Top AppBar */}
             <div className="flex justify-between items-center w-full px-6 py-4 sticky top-20 bg-[#fbf9f4]/90 backdrop-blur-md z-40 border-b border-stone-200 shadow-sm">
                 <Link className="flex items-center gap-2 text-stone-600 hover:text-emerald-700 transition-colors" to="/cam-nang">
@@ -92,6 +100,8 @@ export default function SelectionGuidePage() {
                     <div className="absolute inset-0 z-0">
                         <img
                             alt="Chọn sầu riêng chín ngon"
+                            fetchpriority="high"
+                            decoding="async"
                             className="w-full h-full object-cover"
                             src="/cach_chon_sr.webp"
                         />
@@ -249,7 +259,7 @@ export default function SelectionGuidePage() {
                         <div className="max-w-xl">
                             <span className="font-sans text-[12px] font-semibold tracking-[0.1em] uppercase text-[#735c00] mb-3 block">{t('ctaLabel')}</span>
                             <h2 className="font-serif text-[30px] font-bold text-[#182810] leading-tight mb-4">{t('ctaTitle')}</h2>
-                            <p className="font-serif text-[17px] text-[#444840] leading-[1.7]">Nếu bạn vẫn chưa đủ tự tin, hãy để chúng tôi lo phần chọn lựa. Mỗi trái sầu riêng tại {t('hbKing')} đều đã qua kiểm định bởi chuyên gia.</p>
+                            <p className="font-serif text-[17px] text-[#444840] leading-[1.7]">{t('ctaDesc')}</p>
                         </div>
                         <Link to="/san-pham" className="shrink-0 inline-flex items-center gap-3 px-10 py-4 rounded-2xl bg-[#182810] text-[#fdd65e] font-sans font-bold text-[15px] tracking-wide hover:bg-[#2a3d1c] transition-all duration-300 shadow-lg">
                             <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>shopping_basket</span>

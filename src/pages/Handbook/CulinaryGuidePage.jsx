@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import SEO from '../../components/SEO';
 
 const dishes = [
     {
@@ -64,6 +65,13 @@ export default function CulinaryGuidePage() {
 
     return (
         <div className="bg-[#fbf9f4] text-[#1b1c19] antialiased selection:bg-[#fdd65e] selection:text-[#745c00] min-h-screen">
+            <SEO 
+                title={t('culTitle')} 
+                description={t('culMetaDesc')}
+                image="/Hero.webp"
+                type="article"
+                article={{ datePublished: '2024-06-01', dateModified: '2025-06-11' }}
+            />
             {/* Top AppBar */}
             <div className="flex justify-between items-center w-full px-6 py-4 sticky top-20 bg-[#fbf9f4]/90 backdrop-blur-md z-40 border-b border-stone-200 shadow-sm">
                 <Link className="flex items-center gap-2 text-stone-600 hover:text-emerald-700 transition-colors" to="/cam-nang">
@@ -82,6 +90,8 @@ export default function CulinaryGuidePage() {
                     <div className="absolute inset-0 z-0">
                         <img
                             alt="Culinary Guide Hero"
+                            fetchpriority="high"
+                            decoding="async"
                             className="w-full h-full object-cover"
                             src="/Hero.webp"
                         />

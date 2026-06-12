@@ -1,6 +1,6 @@
 // src/components/Header.jsx
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
 export default function Header() {
@@ -12,11 +12,23 @@ export default function Header() {
     const [searchParams, setSearchParams] = useSearchParams();
     const [searchVal, setSearchVal] = useState(searchParams.get('search') || '');
     const [isLangOpen, setIsLangOpen] = useState(false);
+    const langRef = useRef(null); // CODE-03: ref để detect click-outside
 
     // Đồng bộ ô tìm kiếm khi URL thay đổi (ví dụ: bấm nút back)
     useEffect(() => {
         setSearchVal(searchParams.get('search') || '');
     }, [searchParams]);
+
+    // CODE-03: Đóng dropdown ngôn ngữ khi click ra ngoài (có cleanup để tránh memory leak)
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (langRef.current && !langRef.current.contains(e.target)) {
+                setIsLangOpen(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
 
     const handleSearchChange = (e) => {
         const value = e.target.value;
@@ -62,12 +74,12 @@ export default function Header() {
                 <div className="max-w-[1440px] mx-auto px-4 md:px-8 h-20 flex items-center justify-between gap-4 lg:gap-8">
 
                     {/* 1. Logo */}
-                    <Link to="/" className="flex items-center gap-3 shrink-0 group">
+                    <Link to="/" className="flex items-center gap-2 md:gap-3 shrink-0 group min-w-0">
                         {/* Đã thêm: bg-white (nền trắng), p-1 (đệm), border (viền vàng) */}
-                        <div className="w-12 h-12 md:w-14 md:h-14 bg-white rounded-full flex items-center justify-center border-2 border-[#c9a227] shadow-[0_0_10px_rgba(201,162,39,0.3)] group-hover:scale-110 transition-transform duration-300">
+                        <div className="w-10 h-10 md:w-14 md:h-14 bg-white rounded-full flex items-center justify-center border-2 border-[#c9a227] shadow-[0_0_10px_rgba(201,162,39,0.3)] group-hover:scale-110 transition-transform duration-300 shrink-0">
                             <img alt="Logo" className="w-full h-full object-contain p-0.5" src="/Logo.svg" />
                         </div>
-                        <div className="text-sm md:text-xl font-black text-white uppercase tracking-tight hidden sm:block">
+                        <div className="text-[13px] sm:text-base md:text-xl font-black text-[#c9a227] uppercase tracking-tight truncate">
                             SẦU RIÊNG ÚT THOA
                         </div>
                     </Link>
@@ -97,30 +109,39 @@ export default function Header() {
 
                         {/* Language Selector */}
                         <div
+                            ref={langRef}
                             className="flex items-center gap-1.5 md:gap-2 cursor-pointer group relative py-2"
                             onClick={() => setIsLangOpen(!isLangOpen)}
-                            onMouseLeave={() => setIsLangOpen(false)}
                         >
-                            <img alt={langCode} className="w-5 h-3 md:w-6 md:h-4 object-cover rounded-sm shadow-sm" src={flagSrc} />
+                            <img
+                                alt={langCode}
+                                src={flagSrc}
+                                width={24}
+                                height={16}
+                                className="w-5 h-3 md:w-6 md:h-4 object-cover rounded-sm shadow-sm"
+                            />
                             <span className="text-[11px] md:text-xs font-bold text-white uppercase hidden sm:block">{langCode}</span>
 
                             {/* Dropdown Languages */}
                             <div className={`absolute top-full right-[-30px] md:right-0 mt-2 w-36 bg-[#1a3d24] border border-[#c9a227]/20 shadow-xl rounded-xl overflow-hidden transition-all duration-300 z-50 transform origin-top-right ${isLangOpen ? 'opacity-100 visible scale-100' : 'opacity-0 invisible scale-95 lg:group-hover:opacity-100 lg:group-hover:visible lg:group-hover:scale-100'}`}>
                                 <button onClick={(e) => { e.stopPropagation(); setLanguage('vi'); }} className="w-full text-left px-4 py-3 hover:bg-[#122e1b] flex items-center gap-3 text-sm text-[#e8dfc0] font-medium transition-colors border-b border-[#c9a227]/10">
-                                    <img src={flags.vi} alt="VN" className="w-5 h-3.5 shadow-sm rounded-sm object-cover" /> Tiếng Việt
+                                    <img src={flags.vi} alt="VN" width={20} height={14} className="w-5 h-3.5 shadow-sm rounded-sm object-cover" /> Tiếng Việt
                                 </button>
                                 <button onClick={(e) => { e.stopPropagation(); setLanguage('en'); }} className="w-full text-left px-4 py-3 hover:bg-[#122e1b] flex items-center gap-3 text-sm text-[#e8dfc0] font-medium transition-colors border-b border-[#c9a227]/10">
-                                    <img src={flags.en} alt="US" className="w-5 h-3.5 shadow-sm rounded-sm object-cover" /> English
+                                    <img src={flags.en} alt="US" width={20} height={14} className="w-5 h-3.5 shadow-sm rounded-sm object-cover" /> English
                                 </button>
                                 <button onClick={(e) => { e.stopPropagation(); setLanguage('zh'); }} className="w-full text-left px-4 py-3 hover:bg-[#122e1b] flex items-center gap-3 text-sm text-[#e8dfc0] font-medium transition-colors">
-                                    <img src={flags.zh} alt="CN" className="w-5 h-3.5 shadow-sm rounded-sm object-cover" /> 中文
+                                    <img src={flags.zh} alt="CN" width={20} height={14} className="w-5 h-3.5 shadow-sm rounded-sm object-cover" /> 中文
                                 </button>
                             </div>
                         </div>
 
-                        {/* Mobile Menu Toggle */}
+                        {/* Mobile Menu Toggle — CODE-04: aria-label + aria-expanded */}
                         <div className="lg:hidden flex items-center">
                             <button
+                                aria-label={isMenuOpen ? 'Đóng menu' : 'Mở menu điều hướng'}
+                                aria-expanded={isMenuOpen}
+                                aria-controls="mobile-nav"
                                 className="material-symbols-outlined text-[#e8dfc0] hover:text-white text-[26px] ml-1 focus:outline-none mt-1 transition-colors"
                                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                             >
@@ -133,7 +154,7 @@ export default function Header() {
 
                 {/* Mobile Navigation Dropdown */}
                 {isMenuOpen && (
-                    <div className="lg:hidden absolute top-full left-0 w-full bg-[#1a3d24]/98 backdrop-blur-md shadow-xl border-t border-[#c9a227]/20 flex flex-col px-6 py-6 gap-6">
+                    <div id="mobile-nav" className="lg:hidden absolute top-full left-0 w-full bg-[#1a3d24]/98 backdrop-blur-md shadow-xl border-t border-[#c9a227]/20 flex flex-col px-6 py-6 gap-6">
                         <Link to="/gioi-thieu" onClick={() => setIsMenuOpen(false)} className={getLinkStyle('/gioi-thieu')}>{t('about')}</Link>
                         <Link to="/san-pham" onClick={() => setIsMenuOpen(false)} className={getLinkStyle('/san-pham')}>{t('products')}</Link>
                         <Link to="/cam-nang" onClick={() => setIsMenuOpen(false)} className={getLinkStyle('/cam-nang')}>{t('handbook')}</Link>
